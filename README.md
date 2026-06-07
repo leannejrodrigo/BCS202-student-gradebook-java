@@ -44,18 +44,17 @@ StudentGradebookSystem/
 │
 ├── src/
 │   ├── GradebookApp.java       # Main entry point, menu loop
-│   ├── Gradebook.java          # Core logic: add, delete, assign, report
-│   ├── Student.java            # Student class with name and subject list
-│   ├── Subject.java            # Subject class with name and grade
-│   └── GradebookInterface.java # Interface defining gradebook operations
+│   ├── Gradebook.java          # Core logic: add, delete, assign, report, file I/O
+│   ├── Student.java            # Student class with name, grades, and average calculation
+│   └── Subject.java            # Subject class with subject name
 │
 ├── data/
-│   └── students.txt            # Persistent data file (auto-generated)
+│   └── gradebook.txt           # Persistent data file (auto-generated on first run)
 │
 └── README.md
 ```
 
-> **Note:** The `data/students.txt` file is created automatically when you first run the application. You do not need to create it manually.
+> **Note:** `gradebook.txt` is created automatically when you first run the application. You do not need to create it manually.
 
 ---
 
@@ -107,16 +106,9 @@ Enter choice:
 
 Student data is stored persistently using Java's `FileWriter` and `Scanner` classes.
 
-- On **startup**, data is loaded from `students.txt` via `loadData()`
+- On **startup**, data is loaded from `gradebook.txt` via `loadData()`
 - After every **add, assign, or delete**, data is written back via `writeData()`
 - If the file does not exist on first run, it is created automatically
-
-The two utility classes included in this repository (`t1.java` and `T2.java`) were earlier exercises demonstrating file read/write fundamentals that this project builds on:
-
-| File | Purpose |
-|------|---------|
-| `t1.java` | Reads from one file, writes all lines to another |
-| `T2.java` | Reads a file and counts the number of lines |
 
 ---
 
@@ -131,8 +123,6 @@ The application handles the following exceptions:
 | `InputMismatchException` | User enters a non-numeric menu choice |
 | `IllegalArgumentException` | Empty name, empty subject, or grade out of range (0–100) |
 
-All errors display a clear, user-friendly message without crashing the program.
-
 ---
 
 ## OOP Concepts Used
@@ -140,12 +130,11 @@ All errors display a clear, user-friendly message without crashing the program.
 | Concept | Where Applied |
 |---------|--------------|
 | **Classes & Objects** | `Student`, `Subject`, `Gradebook` |
-| **Inheritance** | Student/Subject hierarchy |
-| **Abstraction** | Abstract methods in base classes |
-| **Interfaces** | `GradebookInterface` defines the contract for gradebook operations |
-| **Encapsulation** | Private fields with getters/setters |
-| **Exception Handling** | Try/catch blocks throughout `GradebookApp` |
-| **File I/O** | `FileWriter`, `Scanner`, `File` classes |
+| **Inheritance** | `Student` extends `Gradebook` |
+| **Encapsulation** | Private fields with getters in all classes |
+| **Inner Class** | `Grade` inner class inside `Student` |
+| **Exception Handling** | Try/catch blocks throughout `GradebookApp` and `Student` |
+| **File I/O** | `FileWriter`, `Scanner`, `File` classes in `Gradebook` |
 
 ---
 
